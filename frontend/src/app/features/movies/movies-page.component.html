@@ -1,0 +1,50 @@
+<section class="page">
+  <header class="header">
+    <div>
+      <h1>Movies</h1>
+      <p>Browse the movie catalog.</p>
+    </div>
+  </header>
+
+  <div class="filter panel">
+    <label class="label">
+      Title
+      <input class="input" [(ngModel)]="titleFilter" placeholder="Search by title" />
+    </label>
+    <div class="actions">
+      <button class="btn btn--secondary" (click)="applyFilter()">Search</button>
+      <button class="btn btn--ghost" (click)="clearFilter()">Clear</button>
+    </div>
+  </div>
+
+  <div class="status" *ngIf="isLoading">Loading movies...</div>
+  <div class="status error" *ngIf="error">{{ error }}</div>
+
+  <div class="grid grid--cards" *ngIf="!isLoading && movies.length">
+    <article class="card" *ngFor="let movie of movies">
+      <header>
+        <h2>{{ movie.title }}</h2>
+        <span class="badge">{{ movie.rating }}</span>
+      </header>
+      <p>{{ movie.synopsis || 'No synopsis available.' }}</p>
+      <div class="meta">
+        <span><strong>Duration:</strong> {{ movie.durationMinutes }} min</span>
+        <span><strong>Director:</strong> {{ movie.director || 'N/A' }}</span>
+        <span><strong>Language:</strong> {{ movie.language || 'N/A' }}</span>
+        <span><strong>Release:</strong> {{ movie.releaseDate || 'TBA' }}</span>
+      </div>
+    </article>
+  </div>
+
+  <app-empty-state
+    *ngIf="!isLoading && !movies.length"
+    title="No movies yet"
+    message="Add movies in the admin area to build the catalog.">
+  </app-empty-state>
+
+  <div class="pagination">
+    <button class="btn btn--secondary" (click)="previousPage()" [disabled]="page === 1">Previous</button>
+    <span>Page {{ page }}</span>
+    <button class="btn btn--secondary" (click)="nextPage()" [disabled]="movies.length < pageSize">Next</button>
+  </div>
+</section>

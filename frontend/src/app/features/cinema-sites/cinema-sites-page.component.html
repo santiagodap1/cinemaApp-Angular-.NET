@@ -1,0 +1,32 @@
+<section class="page">
+  <header class="header">
+    <div>
+      <h1>Cinema Sites</h1>
+      <p>Browse cinema locations and addresses.</p>
+    </div>
+  </header>
+
+  <div class="status" *ngIf="isLoading">Loading cinema sites...</div>
+  <div class="status error" *ngIf="error">{{ error }}</div>
+
+  <div class="grid grid--cards" *ngIf="!isLoading && sites.length">
+    <article class="card" *ngFor="let site of sites">
+      <h2>{{ site.name }}</h2>
+      <p>{{ site.address.street }}</p>
+      <p>{{ site.address.city }}, {{ site.address.state }}</p>
+      <p>{{ site.address.country }} {{ site.address.postalCode }}</p>
+    </article>
+  </div>
+
+  <app-empty-state
+    *ngIf="!isLoading && !sites.length"
+    title="No cinema sites yet"
+    message="Create cinema sites in the admin area to populate this list.">
+  </app-empty-state>
+
+  <div class="pagination">
+    <button class="btn btn--secondary" (click)="previousPage()" [disabled]="page === 1">Previous</button>
+    <span>Page {{ page }}</span>
+    <button class="btn btn--secondary" (click)="nextPage()" [disabled]="sites.length < pageSize">Next</button>
+  </div>
+</section>

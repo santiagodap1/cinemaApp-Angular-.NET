@@ -1,0 +1,6 @@
+<div class="toast-stack">
+  <div class="toast" *ngFor="let item of notifications.messages$ | async" [class]="'toast ' + item.type">
+    <span>{{ item.message }}</span>
+    <button (click)="notifications.dismiss(item.id)">Dismiss</button>
+  </div>
+</div>

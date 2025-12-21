@@ -1,0 +1,10 @@
+.empty {
+  padding: 1.5rem;
+  border-radius: var(--radius);
+  background: #fff7e1;
+  border: 1px dashed var(--warning);
+  color: #92400e;
+  display: grid;
+  gap: 0.5rem;
+  text-align: center;
+}

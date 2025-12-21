@@ -1,0 +1,13 @@
+<section class="panel login-card">
+  <h1>Admin Access</h1>
+  <p>Enter the admin API key to access admin tools.</p>
+
+  <label class="label">
+    Admin API Key
+    <input class="input" type="password" [(ngModel)]="adminKey" placeholder="Enter admin key" />
+  </label>
+
+  <button class="btn btn--primary" (click)="submit()" [disabled]="isLoading">Sign In</button>
+  <p class="status" *ngIf="isLoading">Validating key...</p>
+  <p class="status error" *ngIf="error">{{ error }}</p>
+</section>

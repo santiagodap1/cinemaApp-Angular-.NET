@@ -1,0 +1,19 @@
+.seat {
+  padding: 0.7rem;
+  border-radius: var(--radius-sm);
+  background: #e2e8f0;
+  display: grid;
+  gap: 0.25rem;
+  text-align: center;
+  border: 1px solid var(--border);
+}
+
+.seat.held {
+  background: #fde68a;
+  border-color: #f59e0b;
+}
+
+.seat.reserved {
+  background: #fca5a5;
+  border-color: #dc2626;
+}

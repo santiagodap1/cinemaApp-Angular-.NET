@@ -1,0 +1,20 @@
+<header class="admin-bar">
+  <div class="brand">Cinema Control Admin</div>
+  <nav class="nav">
+    <a routerLink="/admin" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Dashboard</a>
+    <a routerLink="/admin/cinema-sites" routerLinkActive="active">Cinema Sites</a>
+    <a routerLink="/admin/auditoriums" routerLinkActive="active">Auditoriums</a>
+    <a routerLink="/admin/seats" routerLinkActive="active">Seats</a>
+    <a routerLink="/admin/movies" routerLinkActive="active">Movies</a>
+    <a routerLink="/admin/screenings" routerLinkActive="active">Screenings</a>
+    <a routerLink="/admin/seed" routerLinkActive="active">Seed</a>
+  </nav>
+  <div class="actions">
+    <button class="btn btn--ghost" (click)="clearAdminKey()">Sign Out</button>
+    <a routerLink="/" class="back-link">Back to App</a>
+  </div>
+</header>
+
+<main class="content">
+  <router-outlet />
+</main>

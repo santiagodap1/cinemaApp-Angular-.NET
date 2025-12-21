@@ -1,0 +1,52 @@
+<section class="page">
+  <header class="header">
+    <div>
+      <h1>Reservations</h1>
+      <p>Create and manage reservations.</p>
+    </div>
+  </header>
+
+  <form class="panel" [formGroup]="form" (ngSubmit)="create()">
+    <div class="row">
+      <label class="label">
+        Screening ID
+        <input class="input" formControlName="screeningId" placeholder="Screening ID" />
+      </label>
+      <label class="label">
+        Customer Email
+        <input class="input" formControlName="customerEmail" placeholder="name@example.com" />
+      </label>
+      <label class="label">
+        Customer Name
+        <input class="input" formControlName="customerFullName" placeholder="Full name" />
+      </label>
+    </div>
+    <label class="label">
+      Seat IDs (comma separated)
+      <input class="input" formControlName="seatIds" placeholder="seat-id-1, seat-id-2" />
+    </label>
+    <button class="btn btn--primary" type="submit" [disabled]="form.invalid">Create Reservation</button>
+  </form>
+
+  <div class="status" *ngIf="isLoading">Processing reservation...</div>
+  <div class="status error" *ngIf="error">{{ error }}</div>
+
+  <div class="panel stack" *ngIf="result">
+    <h2>Reservation</h2>
+    <p><strong>ID:</strong> {{ result.id }}</p>
+    <p><strong>Status:</strong> {{ result.status }}</p>
+    <p><strong>Total:</strong> {{ result.totalAmount | currency }}</p>
+    <p><strong>Reserved At:</strong> {{ result.reservedAt | date: 'medium' }}</p>
+  </div>
+
+  <div class="panel">
+    <label class="label">
+      Reservation ID
+      <input class="input" [(ngModel)]="reservationId" placeholder="Reservation ID" />
+    </label>
+    <div class="actions">
+      <button class="btn btn--ghost" (click)="confirm()">Confirm</button>
+      <button class="btn btn--danger" (click)="cancel()">Cancel</button>
+    </div>
+  </div>
+</section>

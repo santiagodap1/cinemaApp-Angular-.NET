@@ -1,0 +1,73 @@
+<section class="page">
+  <header class="header">
+    <div>
+      <h1>Screenings</h1>
+      <p>Browse screenings and check occupancy.</p>
+    </div>
+  </header>
+
+  <div class="filter panel">
+    <label class="label">
+      Movie ID
+      <input class="input" [(ngModel)]="movieId" placeholder="Movie ID" />
+    </label>
+    <label class="label">
+      Cinema Site ID
+      <input class="input" [(ngModel)]="cinemaSiteId" placeholder="Cinema site ID" />
+    </label>
+    <label class="label">
+      Date
+      <input class="input" type="date" [(ngModel)]="date" />
+    </label>
+    <div class="actions">
+      <button class="btn btn--secondary" (click)="applyFilter()">Apply</button>
+      <button class="btn btn--ghost" (click)="clearFilter()">Clear</button>
+    </div>
+  </div>
+
+  <div class="status" *ngIf="isLoading">Loading screenings...</div>
+  <div class="status error" *ngIf="error">{{ error }}</div>
+
+  <div class="grid grid--wide" *ngIf="!isLoading && screenings.length">
+    <article class="card" *ngFor="let screening of screenings">
+      <h2>Screening {{ screening.id }}</h2>
+      <p><strong>Movie:</strong> {{ screening.movieId }}</p>
+      <p><strong>Auditorium:</strong> {{ screening.auditoriumId }}</p>
+      <p><strong>Format:</strong> {{ formatLabels[screening.format] }}</p>
+      <p><strong>Starts:</strong> {{ screening.startsAt | date: 'medium' }}</p>
+      <p><strong>Ends:</strong> {{ screening.endsAt | date: 'medium' }}</p>
+      <button class="btn btn--ghost" (click)="showOccupancy(screening.id)">Show Occupancy</button>
+
+      <div class="panel panel--subtle panel--compact stat-grid stat-grid--compact" *ngIf="occupancy[screening.id] as occ">
+        <div class="stat">
+          <span class="stat-label">Capacity</span>
+          <span class="stat-value">{{ occ.capacity }}</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">Reserved</span>
+          <span class="stat-value">{{ occ.reservedCount }}</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">Held</span>
+          <span class="stat-value">{{ occ.heldCount }}</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">Available</span>
+          <span class="stat-value">{{ occ.availableCount }}</span>
+        </div>
+      </div>
+    </article>
+  </div>
+
+  <app-empty-state
+    *ngIf="!isLoading && !screenings.length"
+    title="No screenings yet"
+    message="Create screenings in the admin area to start scheduling.">
+  </app-empty-state>
+
+  <div class="pagination">
+    <button class="btn btn--secondary" (click)="previousPage()" [disabled]="page === 1">Previous</button>
+    <span>Page {{ page }}</span>
+    <button class="btn btn--secondary" (click)="nextPage()" [disabled]="screenings.length < pageSize">Next</button>
+  </div>
+</section>

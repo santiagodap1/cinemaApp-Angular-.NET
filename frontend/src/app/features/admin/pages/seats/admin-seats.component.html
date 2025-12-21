@@ -1,0 +1,55 @@
+<section class="page">
+  <header class="header">
+    <div>
+      <h1>Seats</h1>
+      <p>Create or remove seats for an auditorium.</p>
+    </div>
+  </header>
+
+  <form class="panel" [formGroup]="form" (ngSubmit)="save()">
+    <div class="row">
+      <label class="label">
+        Auditorium ID
+        <input class="input" formControlName="auditoriumId" placeholder="Auditorium ID" />
+      </label>
+      <label class="label">
+        Row
+        <input class="input" formControlName="row" placeholder="Row (A, B, C)" />
+      </label>
+      <label class="label">
+        Seat Number
+        <input class="input" type="number" formControlName="number" />
+      </label>
+    </div>
+    <button class="btn btn--primary" type="submit" [disabled]="form.invalid">Create Seat</button>
+  </form>
+
+  <div class="filter panel">
+    <label class="label">
+      Auditorium ID
+      <input class="input" [(ngModel)]="auditoriumId" placeholder="Auditorium ID" />
+    </label>
+    <div class="actions">
+      <button class="btn btn--secondary" (click)="apply()">Load</button>
+    </div>
+  </div>
+
+  <div class="status" *ngIf="isLoading">Loading seats...</div>
+  <div class="status error" *ngIf="error">{{ error }}</div>
+
+  <div class="grid grid--compact" *ngIf="!isLoading && seats.length">
+    <article class="card" *ngFor="let seat of seats">
+      <h2>{{ seat.row }}{{ seat.number }}</h2>
+      <p>Auditorium {{ seat.auditoriumId }}</p>
+      <button class="btn btn--danger" (click)="remove(seat)">Delete</button>
+    </article>
+  </div>
+
+  <p class="status" *ngIf="!isLoading && !seats.length">No seats found.</p>
+
+  <div class="pagination">
+    <button class="btn btn--secondary" (click)="previousPage()" [disabled]="page === 1">Previous</button>
+    <span>Page {{ page }}</span>
+    <button class="btn btn--secondary" (click)="nextPage()" [disabled]="seats.length < pageSize">Next</button>
+  </div>
+</section>

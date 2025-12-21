@@ -1,0 +1,45 @@
+<section class="page">
+  <header class="header">
+    <div>
+      <h1>Occupancy</h1>
+      <p>Check capacity and holds for a screening.</p>
+    </div>
+  </header>
+
+  <div class="filter panel">
+    <label class="label">
+      Screening ID
+      <input class="input" [(ngModel)]="screeningId" placeholder="Enter screening ID" />
+    </label>
+    <div class="actions">
+      <button class="btn btn--secondary" (click)="load()">Load</button>
+    </div>
+  </div>
+
+  <div class="status" *ngIf="isLoading">Loading occupancy...</div>
+  <div class="status error" *ngIf="error">{{ error }}</div>
+
+  <div class="panel" *ngIf="occupancy">
+    <h2>Screening {{ occupancy.screeningId }}</h2>
+    <div class="stat-grid">
+      <div class="stat">
+        <span class="stat-label">Capacity</span>
+        <span class="stat-value">{{ occupancy.capacity }}</span>
+      </div>
+      <div class="stat">
+        <span class="stat-label">Reserved</span>
+        <span class="stat-value">{{ occupancy.reservedCount }}</span>
+      </div>
+      <div class="stat">
+        <span class="stat-label">Held</span>
+        <span class="stat-value">{{ occupancy.heldCount }}</span>
+      </div>
+      <div class="stat">
+        <span class="stat-label">Available</span>
+        <span class="stat-value">{{ occupancy.availableCount }}</span>
+      </div>
+    </div>
+  </div>
+
+  <p class="status" *ngIf="!isLoading && !occupancy">No occupancy data loaded.</p>
+</section>

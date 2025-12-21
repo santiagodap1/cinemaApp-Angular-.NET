@@ -1,0 +1,36 @@
+<section class="page">
+  <header class="header">
+    <div>
+      <h1>Seats</h1>
+      <p>View seats for an auditorium.</p>
+    </div>
+  </header>
+
+  <div class="filter panel">
+    <label class="label">
+      Auditorium ID
+      <input class="input" [(ngModel)]="auditoriumId" placeholder="Enter auditorium ID" />
+    </label>
+    <div class="actions">
+      <button class="btn btn--secondary" (click)="apply()">Load</button>
+    </div>
+  </div>
+
+  <div class="status" *ngIf="isLoading">Loading seats...</div>
+  <div class="status error" *ngIf="error">{{ error }}</div>
+
+  <div class="grid grid--compact" *ngIf="!isLoading && seats.length">
+    <article class="card" *ngFor="let seat of seats">
+      <h2>Row {{ seat.row }}</h2>
+      <p>Seat {{ seat.number }}</p>
+    </article>
+  </div>
+
+  <p class="status" *ngIf="!isLoading && !seats.length">No seats found.</p>
+
+  <div class="pagination">
+    <button class="btn btn--secondary" (click)="previousPage()" [disabled]="page === 1">Previous</button>
+    <span>Page {{ page }}</span>
+    <button class="btn btn--secondary" (click)="nextPage()" [disabled]="seats.length < pageSize">Next</button>
+  </div>
+</section>

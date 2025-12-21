@@ -1,0 +1,61 @@
+<section class="page">
+  <header class="header">
+    <div>
+      <h1>Auditoriums</h1>
+      <p>Create, update, or remove auditoriums.</p>
+    </div>
+    <button class="btn btn--secondary" (click)="reset()">Clear</button>
+  </header>
+
+  <form class="panel" [formGroup]="form" (ngSubmit)="save()">
+    <div class="row">
+      <label class="label">
+        Cinema Site ID
+        <input class="input" formControlName="cinemaSiteId" placeholder="Cinema site ID" />
+      </label>
+      <label class="label">
+        Name
+        <input class="input" formControlName="name" placeholder="Auditorium name" />
+      </label>
+      <label class="label">
+        Capacity
+        <input class="input" type="number" formControlName="capacity" />
+      </label>
+    </div>
+    <button class="btn btn--primary" type="submit" [disabled]="form.invalid">Save</button>
+  </form>
+
+  <div class="filter panel">
+    <label class="label">
+      Filter by Cinema Site ID
+      <input class="input" [(ngModel)]="filterCinemaSiteId" placeholder="Optional cinema site ID" />
+    </label>
+    <div class="actions">
+      <button class="btn btn--secondary" (click)="applyFilter()">Apply</button>
+      <button class="btn btn--ghost" (click)="clearFilter()">Clear</button>
+    </div>
+  </div>
+
+  <div class="status" *ngIf="isLoading">Loading auditoriums...</div>
+  <div class="status error" *ngIf="error">{{ error }}</div>
+
+  <div class="grid grid--cards" *ngIf="!isLoading && auditoriums.length">
+    <article class="card" *ngFor="let auditorium of auditoriums">
+      <h2>{{ auditorium.name }}</h2>
+      <p><strong>Capacity:</strong> {{ auditorium.capacity }}</p>
+      <p><strong>Cinema Site ID:</strong> {{ auditorium.cinemaSiteId }}</p>
+      <div class="actions">
+        <button class="btn btn--ghost" (click)="edit(auditorium)">Edit</button>
+        <button class="btn btn--danger" (click)="remove(auditorium)">Delete</button>
+      </div>
+    </article>
+  </div>
+
+  <p class="status" *ngIf="!isLoading && !auditoriums.length">No auditoriums found.</p>
+
+  <div class="pagination">
+    <button class="btn btn--secondary" (click)="previousPage()" [disabled]="page === 1">Previous</button>
+    <span>Page {{ page }}</span>
+    <button class="btn btn--secondary" (click)="nextPage()" [disabled]="auditoriums.length < pageSize">Next</button>
+  </div>
+</section>

@@ -1,0 +1,38 @@
+<section class="page">
+  <header class="header">
+    <div>
+      <h1>Auditoriums</h1>
+      <p>Browse auditoriums and capacity.</p>
+    </div>
+  </header>
+
+  <div class="filter panel">
+    <label class="label">
+      Cinema Site ID
+      <input class="input" [(ngModel)]="cinemaSiteId" placeholder="Optional cinema site ID" />
+    </label>
+    <div class="actions">
+      <button class="btn btn--secondary" (click)="applyFilter()">Apply</button>
+      <button class="btn btn--ghost" (click)="clearFilter()">Clear</button>
+    </div>
+  </div>
+
+  <div class="status" *ngIf="isLoading">Loading auditoriums...</div>
+  <div class="status error" *ngIf="error">{{ error }}</div>
+
+  <div class="grid grid--cards" *ngIf="!isLoading && auditoriums.length">
+    <article class="card" *ngFor="let auditorium of auditoriums">
+      <h2>{{ auditorium.name }}</h2>
+      <p><strong>Capacity:</strong> {{ auditorium.capacity }}</p>
+      <p><strong>Cinema Site ID:</strong> {{ auditorium.cinemaSiteId }}</p>
+    </article>
+  </div>
+
+  <p class="status" *ngIf="!isLoading && !auditoriums.length">No auditoriums found.</p>
+
+  <div class="pagination">
+    <button class="btn btn--secondary" (click)="previousPage()" [disabled]="page === 1">Previous</button>
+    <span>Page {{ page }}</span>
+    <button class="btn btn--secondary" (click)="nextPage()" [disabled]="auditoriums.length < pageSize">Next</button>
+  </div>
+</section>

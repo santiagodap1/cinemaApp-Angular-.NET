@@ -1,0 +1,42 @@
+<section class="page">
+  <header class="header">
+    <div>
+      <h1>Seat Map</h1>
+      <p>Check seat availability by screening.</p>
+    </div>
+  </header>
+
+  <div class="filter panel">
+    <label class="label">
+      Screening ID
+      <input class="input" [(ngModel)]="screeningId" placeholder="Enter screening ID" />
+    </label>
+    <div class="actions">
+      <button class="btn btn--secondary" (click)="load()">Load</button>
+    </div>
+  </div>
+
+  <div class="status" *ngIf="isLoading">Loading seat map...</div>
+  <div class="status error" *ngIf="error">{{ error }}</div>
+
+  <div class="meta meta--inline" *ngIf="seatMap">
+    <span><strong>Auditorium:</strong> {{ seatMap.auditoriumId }}</span>
+    <span><strong>Capacity:</strong> {{ seatMap.capacity }}</span>
+    <span><strong>Starts:</strong> {{ seatMap.startsAt | date: 'medium' }}</span>
+  </div>
+
+  <div class="legend" *ngIf="seatMap">
+    <span class="legend-item"><span class="legend-dot available"></span>Available</span>
+    <span class="legend-item"><span class="legend-dot held"></span>Held</span>
+    <span class="legend-item"><span class="legend-dot reserved"></span>Reserved</span>
+  </div>
+
+  <div class="grid grid--micro" *ngIf="seatMap">
+    <div class="seat" *ngFor="let seat of seatMap.seats" [class.held]="seat.status === 1" [class.reserved]="seat.status === 2">
+      <span>{{ seat.row }}{{ seat.number }}</span>
+      <small>{{ seatStatusLabels[seat.status] }}</small>
+    </div>
+  </div>
+
+  <p class="status" *ngIf="!isLoading && !seatMap">No seat map loaded.</p>
+</section>

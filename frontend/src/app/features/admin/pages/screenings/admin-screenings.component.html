@@ -1,0 +1,79 @@
+<section class="page">
+  <header class="header">
+    <div>
+      <h1>Screenings</h1>
+      <p>Create screenings with format and schedule.</p>
+    </div>
+  </header>
+
+  <form class="panel" [formGroup]="form" (ngSubmit)="save()">
+    <div class="row">
+      <label class="label">
+        Movie ID
+        <input class="input" formControlName="movieId" placeholder="Movie ID" />
+      </label>
+      <label class="label">
+        Auditorium ID
+        <input class="input" formControlName="auditoriumId" placeholder="Auditorium ID" />
+      </label>
+      <label class="label">
+        Format
+        <select class="input" formControlName="format">
+          <option *ngFor="let option of formatOptions" [value]="option.value">{{ option.label }}</option>
+        </select>
+      </label>
+    </div>
+    <div class="row">
+      <label class="label">
+        Starts At
+        <input class="input" type="datetime-local" formControlName="startsAt" />
+      </label>
+      <label class="label">
+        Ends At
+        <input class="input" type="datetime-local" formControlName="endsAt" />
+      </label>
+    </div>
+    <button class="btn btn--primary" type="submit" [disabled]="form.invalid">Create Screening</button>
+  </form>
+
+  <div class="filter panel">
+    <label class="label">
+      Movie ID
+      <input class="input" [(ngModel)]="movieIdFilter" placeholder="Movie ID" />
+    </label>
+    <label class="label">
+      Cinema Site ID
+      <input class="input" [(ngModel)]="cinemaSiteIdFilter" placeholder="Cinema site ID" />
+    </label>
+    <label class="label">
+      Date
+      <input class="input" type="date" [(ngModel)]="dateFilter" />
+    </label>
+    <div class="actions">
+      <button class="btn btn--secondary" (click)="applyFilter()">Apply</button>
+      <button class="btn btn--ghost" (click)="clearFilter()">Clear</button>
+    </div>
+  </div>
+
+  <div class="status" *ngIf="isLoading">Loading screenings...</div>
+  <div class="status error" *ngIf="error">{{ error }}</div>
+
+  <div class="grid grid--wide" *ngIf="!isLoading && screenings.length">
+    <article class="card" *ngFor="let screening of screenings">
+      <h2>Screening {{ screening.id }}</h2>
+      <p><strong>Movie:</strong> {{ screening.movieId }}</p>
+      <p><strong>Auditorium:</strong> {{ screening.auditoriumId }}</p>
+      <p><strong>Format:</strong> {{ formatLabels[screening.format] }}</p>
+      <p><strong>Starts:</strong> {{ screening.startsAt | date: 'medium' }}</p>
+      <p><strong>Ends:</strong> {{ screening.endsAt | date: 'medium' }}</p>
+    </article>
+  </div>
+
+  <p class="status" *ngIf="!isLoading && !screenings.length">No screenings found.</p>
+
+  <div class="pagination">
+    <button class="btn btn--secondary" (click)="previousPage()" [disabled]="page === 1">Previous</button>
+    <span>Page {{ page }}</span>
+    <button class="btn btn--secondary" (click)="nextPage()" [disabled]="screenings.length < pageSize">Next</button>
+  </div>
+</section>

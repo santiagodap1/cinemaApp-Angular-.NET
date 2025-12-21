@@ -1,0 +1,67 @@
+<section class="page">
+  <header class="header">
+    <div>
+      <h1>Cinema Sites</h1>
+      <p>Create, update, or remove cinema locations.</p>
+    </div>
+    <button class="btn btn--secondary" (click)="reset()">Clear</button>
+  </header>
+
+  <form class="panel" [formGroup]="form" (ngSubmit)="save()">
+    <div class="row">
+      <label class="label">
+        Name
+        <input class="input" formControlName="name" placeholder="Cinema name" />
+      </label>
+      <label class="label">
+        Street
+        <input class="input" formControlName="street" placeholder="Street address" />
+      </label>
+    </div>
+    <div class="row">
+      <label class="label">
+        City
+        <input class="input" formControlName="city" placeholder="City" />
+      </label>
+      <label class="label">
+        State
+        <input class="input" formControlName="state" placeholder="State" />
+      </label>
+    </div>
+    <div class="row">
+      <label class="label">
+        Country
+        <input class="input" formControlName="country" placeholder="Country" />
+      </label>
+      <label class="label">
+        Postal Code
+        <input class="input" formControlName="postalCode" placeholder="Postal code" />
+      </label>
+    </div>
+    <button class="btn btn--primary" type="submit" [disabled]="form.invalid">Save</button>
+  </form>
+
+  <div class="status" *ngIf="isLoading">Loading cinema sites...</div>
+  <div class="status error" *ngIf="error">{{ error }}</div>
+
+  <div class="grid grid--cards" *ngIf="!isLoading && sites.length">
+    <article class="card" *ngFor="let site of sites">
+      <h2>{{ site.name }}</h2>
+      <p>{{ site.address.street }}</p>
+      <p>{{ site.address.city }}, {{ site.address.state }}</p>
+      <p>{{ site.address.country }} {{ site.address.postalCode }}</p>
+      <div class="actions">
+        <button class="btn btn--ghost" (click)="edit(site)">Edit</button>
+        <button class="btn btn--danger" (click)="remove(site)">Delete</button>
+      </div>
+    </article>
+  </div>
+
+  <p class="status" *ngIf="!isLoading && !sites.length">No cinema sites found.</p>
+
+  <div class="pagination">
+    <button class="btn btn--secondary" (click)="previousPage()" [disabled]="page === 1">Previous</button>
+    <span>Page {{ page }}</span>
+    <button class="btn btn--secondary" (click)="nextPage()" [disabled]="sites.length < pageSize">Next</button>
+  </div>
+</section>

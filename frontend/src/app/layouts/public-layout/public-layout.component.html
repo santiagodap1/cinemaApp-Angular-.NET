@@ -1,0 +1,18 @@
+<header class="top-bar">
+  <div class="brand">Cinema Control</div>
+  <nav class="nav">
+    <a routerLink="/cinema-sites" routerLinkActive="active">Cinema Sites</a>
+    <a routerLink="/auditoriums" routerLinkActive="active">Auditoriums</a>
+    <a routerLink="/seats" routerLinkActive="active">Seats</a>
+    <a routerLink="/movies" routerLinkActive="active">Movies</a>
+    <a routerLink="/screenings" routerLinkActive="active">Screenings</a>
+    <a routerLink="/seat-map" routerLinkActive="active">Seat Map</a>
+    <a routerLink="/reservations" routerLinkActive="active">Reservations</a>
+    <a routerLink="/occupancy" routerLinkActive="active">Occupancy</a>
+  </nav>
+  <a class="admin-link" routerLink="/admin">Admin</a>
+</header>
+
+<main class="content">
+  <router-outlet />
+</main>
