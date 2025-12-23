@@ -1,3 +1,16 @@
+## 📸 Screenshots
+
+
+- Public
+
+<img width="1728" height="963" alt="image" src="https://github.com/user-attachments/assets/f8f92eec-19f5-43ab-b3d9-0e20076e0968" />
+
+
+- Admin
+
+<img width="1728" height="963" alt="image" src="https://github.com/user-attachments/assets/b6d1b873-b76c-4c83-800c-b0b0b1e0a1a0" />
+
+
 # Cinema Control (Backend + Frontend)
 
 Clean Architecture cinema management system with a .NET 9 Web API and an Angular standalone frontend. The backend models multi-site cinemas, screenings, seat maps, reservations, and occupancy; the frontend provides public views plus a protected admin area.
